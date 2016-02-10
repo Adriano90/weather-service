@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes"
-	"github.com/Adriano90/weather-service/interfaces"
-	"github.com/Adriano90/weather-service/usecases"
+	"github.com/Adriano90/weather-service/cmd/weather-service/interfaces"
+	"github.com/Adriano90/weather-service/cmd/weather-service/usecases"
 	"log"
 	"net/http"
 )
