@@ -1,0 +1,10 @@
+{
+	"ImportPath": "github.com/Adriano90/weather-service",
+	"GoVersion": "go1.4",
+	"Deps": [
+		{
+			"ImportPath": "github.com/drone/routes",
+			"Rev": "853bef2b231162bb7b09355720416d3af1510d88"
+		}
+	]
+}

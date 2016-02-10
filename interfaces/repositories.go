@@ -1,12 +1,12 @@
 package interfaces
 
 import (
-	"github.com/Adriano90/weather-service/domain"
-	"net/http"
 	"encoding/json"
-	"log"
 	"fmt"
+	"github.com/Adriano90/weather-service/domain"
 	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 type RestHandler interface {
@@ -22,7 +22,7 @@ type RestForecastRepo struct {
 	RestHandler  RestHandler
 }
 
-func NewRestForecastRepo (restHandlers map[string]RestHandler) *RestForecastRepo {
+func NewRestForecastRepo(restHandlers map[string]RestHandler) *RestForecastRepo {
 	repo := new(RestForecastRepo)
 	repo.RestHandlers = restHandlers
 	repo.RestHandler = restHandlers["RestForecastRepo"]
@@ -31,21 +31,21 @@ func NewRestForecastRepo (restHandlers map[string]RestHandler) *RestForecastRepo
 
 func (restForecastRepo *RestForecastRepo) Forecast(latitude, longitude float64) (*domain.Forecast, error) {
 
-	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&appid=%s&cnt=%d",latitude, longitude, "64b793d6792528f2b716206c1789ac82", 2)
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&appid=%s&cnt=%d", latitude, longitude, "64b793d6792528f2b716206c1789ac82", 2)
 	log.Printf("Request URL: %s", url)
 	forecast := new(domain.Forecast)
 
 	req, requestError := http.NewRequest("GET", url, nil)
 
 	if requestError != nil {
-		log.Printf("Error invoking openweather api: %s", requestError.Error())
+		log.Fatal("Error creating request: %s", requestError.Error())
 		return nil, requestError
 	}
 
 	resp, error := restForecastRepo.RestHandler.Do(req)
 
 	if error != nil {
-		log.Printf("Error invoking openweather api: %s", error.Error())
+		log.Fatal("Error invoking openweather api: %s", error.Error())
 		return nil, error
 	}
 
@@ -55,7 +55,7 @@ func (restForecastRepo *RestForecastRepo) Forecast(latitude, longitude float64) 
 	errorParsing := json.Unmarshal(body, forecast)
 
 	if errorParsing != nil {
-		log.Printf("Error parsing openweather api response: %s", errorParsing.Error())
+		log.Fatal("Error parsing openweather api response: %s", errorParsing.Error())
 	}
 
 	return forecast, errorParsing

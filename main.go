@@ -1,17 +1,17 @@
 package main
 
 import (
-	"github.com/drone/routes"
-	"net/http"
+	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes"
 	"github.com/Adriano90/weather-service/interfaces"
 	"github.com/Adriano90/weather-service/usecases"
 	"log"
+	"net/http"
 )
 
 func main() {
 
 	restHandler := &http.Client{}
-	handlers := make(map[string] interfaces.RestHandler)
+	handlers := make(map[string]interfaces.RestHandler)
 	handlers["RestForecastRepo"] = restHandler
 
 	forecastInteractor := new(usecases.ForecastInteractor)

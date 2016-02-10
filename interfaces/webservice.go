@@ -2,10 +2,10 @@ package interfaces
 
 import (
 	"encoding/json"
-	"net/http"
 	"github.com/Adriano90/weather-service/domain"
-	"strconv"
 	"log"
+	"net/http"
+	"strconv"
 )
 
 type ForecastInteractor interface {
@@ -13,7 +13,7 @@ type ForecastInteractor interface {
 }
 
 type WebserviceHandler struct {
-	ForecastInteractor ForecastInteractor;
+	ForecastInteractor ForecastInteractor
 }
 
 func (handler WebserviceHandler) GetForecast(w http.ResponseWriter, r *http.Request) {

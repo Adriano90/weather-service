@@ -5,35 +5,35 @@ type ForecastRepository interface {
 }
 
 type Forecast struct {
-	City		city
-	List	[]forecastData
+	City city           `json:"city"`
+	List []forecastData `json:"list"`
 }
 
 type city struct {
-	Id			int
-	Name		string
-	Coordinates	coordinates
-	Country		string
+	Id          int         `json:"id"`
+	Name        string      `json:"name"`
+	Coordinates coordinates `json:"coordinates"`
+	Country     string      `json:"country"`
 }
 
 type coordinates struct {
-	Latitude	float64
-	Longitude	float64
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }
 
 type forecastData struct {
-	Dt			int
-	Weather		[]weather
-	Main		mainWeather
+	Dt      int         `json:"dt"`
+	Weather []weather   `json:"weather"`
+	Main    mainWeather `json:"main"`
 }
 
 type weather struct {
-	Id			int
-	Main		string
-	Description	string
-	Icon		string
+	Id          int    `json:"id"`
+	Main        string `json:"main"`
+	Description string `json:"description"`
+	Icon        string `json:"icon"`
 }
 
 type mainWeather struct {
-	Temp		float64
+	Temp float64 `json:"temp"`
 }
