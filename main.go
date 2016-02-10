@@ -21,7 +21,7 @@ func main() {
 	webserviceHandler.ForecastInteractor = forecastInteractor
 
 	mux := routes.New()
-	mux.Get("/forecast/:latitude/:longitude", webserviceHandler.GetForecast)
+	mux.Get("/forecast", webserviceHandler.GetForecast)
 	http.Handle("/", mux)
 	log.Println("Bootstrapping weather-service...")
 	log.Fatal(http.ListenAndServe(":8088", nil))

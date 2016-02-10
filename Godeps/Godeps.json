@@ -1,6 +1,9 @@
 {
 	"ImportPath": "github.com/Adriano90/weather-service",
 	"GoVersion": "go1.4",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/drone/routes",

@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-	"encoding/json"
+	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes"
 	"github.com/Adriano90/weather-service/domain"
 	"log"
 	"net/http"
@@ -18,10 +18,23 @@ type WebserviceHandler struct {
 
 func (handler WebserviceHandler) GetForecast(w http.ResponseWriter, r *http.Request) {
 	params := r.URL.Query()
-	latitude, _ := strconv.ParseFloat(params.Get(":latitude"), 64)
-	longitude, _ := strconv.ParseFloat(params.Get(":longitude"), 64)
-	forecast, _ := handler.ForecastInteractor.FindByCoordinates(latitude, longitude)
-	js, err := json.Marshal(forecast)
+	latitude, err := strconv.ParseFloat(params.Get("latitude"), 64)
+
+	if err != nil {
+		log.Printf("Error parsing latitude: %s", err.Error())
+		http.Error(w, "Wrong latitude value", http.StatusBadRequest)
+		return
+	}
+
+	longitude, err := strconv.ParseFloat(params.Get("longitude"), 64)
+
+	if err != nil {
+		log.Printf("Error parsing longitude: %s", err.Error())
+		http.Error(w, "Wrong longitude value", http.StatusBadRequest)
+		return
+	}
+
+	forecast, err := handler.ForecastInteractor.FindByCoordinates(latitude, longitude)
 
 	if err != nil {
 		log.Printf("Error retrieving forecast: %s", err.Error())
@@ -29,6 +42,5 @@ func (handler WebserviceHandler) GetForecast(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
+	routes.ServeFormatted(w, r, forecast)
 }
