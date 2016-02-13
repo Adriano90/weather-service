@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes"
-	"github.com/Adriano90/weather-service/cmd/weather-service/domain"
+	"github.com/drone/routes"
+	"github.com/Adriano90/weather-service/domain"
 	"log"
 	"net/http"
 	"strconv"

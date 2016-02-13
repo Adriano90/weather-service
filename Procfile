@@ -1,1 +1,1 @@
-web: weather-service
+PORT=5898 web: weather-service

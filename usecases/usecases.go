@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"github.com/Adriano90/weather-service/cmd/weather-service/domain"
+	"github.com/Adriano90/weather-service/domain"
 	"log"
 )
 

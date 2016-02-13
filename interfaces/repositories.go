@@ -3,7 +3,7 @@ package interfaces
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Adriano90/weather-service/cmd/weather-service/domain"
+	"github.com/Adriano90/weather-service/domain"
 	"io/ioutil"
 	"log"
 	"net/http"
