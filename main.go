@@ -1,28 +1,34 @@
 package main
 
 import (
-	"github.com/drone/routes"
+	"fmt"
 	"github.com/Adriano90/weather-service/interfaces"
 	"github.com/Adriano90/weather-service/usecases"
+	"github.com/drone/routes"
+	"github.com/namsral/flag"
 	"log"
 	"net/http"
-	"os"
 )
 
+var (
+	port             string
+	openWeatherAppId string
+)
+
+func init() {
+	flag.StringVar(&port, "port", "5005", "Server port number")
+	flag.StringVar(&openWeatherAppId, "appid", "64b793d6792528f2b716206c1789ac82", "openweather.org app id")
+}
+
 func main() {
+	flag.Parse()
+	fmt.Println("Weather-service params, for more info use -help option:")
+	fmt.Println("\t-Port: " + port)
+	fmt.Println("\t-openweather app id: " + openWeatherAppId)
 
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
-
-	restHandler := &http.Client{}
-	handlers := make(map[string]interfaces.RestHandler)
-	handlers["RestForecastRepo"] = restHandler
-
+	fmt.Println("Bootstrapping system...")
 	forecastInteractor := new(usecases.ForecastInteractor)
-	forecastInteractor.ForecastRepository = interfaces.NewRestForecastRepo(handlers)
+	forecastInteractor.ForecastRepository = interfaces.NewRestForecastRepo(&http.Client{}, openWeatherAppId)
 
 	webserviceHandler := interfaces.WebserviceHandler{}
 	webserviceHandler.ForecastInteractor = forecastInteractor
@@ -30,6 +36,6 @@ func main() {
 	mux := routes.New()
 	mux.Get("/forecast", webserviceHandler.GetForecast)
 	http.Handle("/", mux)
-	log.Println("Bootstrapping weather-service...")
-	log.Fatal(http.ListenAndServe(":" + port, nil))
+	fmt.Println("Bootstrapping web service...")
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

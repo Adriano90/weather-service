@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes/exp/context"
+	"github.com/drone/routes/exp/context"
 )
 
 const (

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes/exp/context"
+	"github.com/drone/routes/exp/context"
 	"net/url"
 )
 

@@ -14,24 +14,26 @@ type RestHandler interface {
 }
 
 type RestRepo struct {
+	AppId       string
 	restHandler RestHandler
 }
 
 type RestForecastRepo struct {
-	RestHandlers map[string]RestHandler
-	RestHandler  RestHandler
+	appId       string
+	restHandler RestHandler
 }
 
-func NewRestForecastRepo(restHandlers map[string]RestHandler) *RestForecastRepo {
-	repo := new(RestForecastRepo)
-	repo.RestHandlers = restHandlers
-	repo.RestHandler = restHandlers["RestForecastRepo"]
+func NewRestForecastRepo(restHandler RestHandler, appId string) *RestForecastRepo {
+	repo := &RestForecastRepo{
+		appId:       appId,
+		restHandler: restHandler,
+	}
 	return repo
 }
 
 func (restForecastRepo *RestForecastRepo) Forecast(latitude, longitude float64) (*domain.Forecast, error) {
 
-	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&appid=%s&cnt=%d", latitude, longitude, "64b793d6792528f2b716206c1789ac82", 2)
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&appid=%s&cnt=%d", latitude, longitude, restForecastRepo.appId, 2)
 	log.Printf("Request URL: %s", url)
 	forecast := new(domain.Forecast)
 
@@ -42,7 +44,7 @@ func (restForecastRepo *RestForecastRepo) Forecast(latitude, longitude float64) 
 		return nil, requestError
 	}
 
-	resp, error := restForecastRepo.RestHandler.Do(req)
+	resp, error := restForecastRepo.restHandler.Do(req)
 
 	if error != nil {
 		log.Fatal("Error invoking openweather api: %s", error.Error())

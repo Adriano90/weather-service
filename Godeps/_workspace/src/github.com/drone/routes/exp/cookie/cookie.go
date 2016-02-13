@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Adriano90/weather-service/Godeps/_workspace/src/github.com/drone/routes/exp/cookie/authcookie"
+	"github.com/drone/routes/exp/cookie/authcookie"
 )
 
 // Sign signs and timestamps a cookie so it cannot be forged.

@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"github.com/drone/routes"
 	"github.com/Adriano90/weather-service/domain"
+	"github.com/drone/routes"
 	"log"
 	"net/http"
 	"strconv"
