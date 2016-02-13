@@ -13,11 +13,6 @@ type RestHandler interface {
 	Do(request *http.Request) (*http.Response, error)
 }
 
-type RestRepo struct {
-	AppId       string
-	restHandler RestHandler
-}
-
 type RestForecastRepo struct {
 	appId       string
 	restHandler RestHandler
@@ -33,9 +28,20 @@ func NewRestForecastRepo(restHandler RestHandler, appId string) *RestForecastRep
 
 func (restForecastRepo *RestForecastRepo) Forecast(latitude, longitude float64) (*domain.Forecast, error) {
 
-	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/forecast?lat=%f&lon=%f&appid=%s&cnt=%d", latitude, longitude, restForecastRepo.appId, 2)
+	const (
+		maxForecast    = 16
+		openWeatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=%f&lon=%f&appid=%s&cnt=%d"
+	)
+
+	url := fmt.Sprintf(
+		openWeatherUrl,
+		latitude,
+		longitude,
+		restForecastRepo.appId,
+		maxForecast,
+	)
+
 	log.Printf("Request URL: %s", url)
-	forecast := new(domain.Forecast)
 
 	req, requestError := http.NewRequest("GET", url, nil)
 
@@ -54,6 +60,7 @@ func (restForecastRepo *RestForecastRepo) Forecast(latitude, longitude float64) 
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
+	forecast := &domain.Forecast{}
 	errorParsing := json.Unmarshal(body, forecast)
 
 	if errorParsing != nil {

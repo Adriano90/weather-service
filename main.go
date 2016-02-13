@@ -17,7 +17,7 @@ var (
 
 func init() {
 	flag.StringVar(&port, "port", "5005", "Server port number")
-	flag.StringVar(&openWeatherAppId, "appid", "64b793d6792528f2b716206c1789ac82", "openweather.org app id")
+	flag.StringVar(&openWeatherAppId, "appid", "64b793d6792528f2b716206c1789ac82", "openweathermap.org app id")
 }
 
 func main() {

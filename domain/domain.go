@@ -12,19 +12,25 @@ type Forecast struct {
 type city struct {
 	Id          int         `json:"id"`
 	Name        string      `json:"name"`
-	Coordinates coordinates `json:"coordinates"`
 	Country     string      `json:"country"`
+	Coordinates coordinates `json:"coord"`
 }
 
 type coordinates struct {
-	Latitude  float64 `json:"latitude"`
-	Longitude float64 `json:"longitude"`
+	Lon float64 `json:"lon"`
+	Lat float64 `json:"lat"`
 }
 
 type forecastData struct {
-	Dt      int         `json:"dt"`
-	Weather []weather   `json:"weather"`
-	Main    mainWeather `json:"main"`
+	Dt       int         `json:"dt"`
+	Weather  []weather   `json:"weather"`
+	Temp     temperature `json:"temp"`
+	Pressure float64     `json:"pressure"`
+	Humidity float64     `json:"humidity"`
+	Speed    float64     `json:"speed"`
+	Deg      float64     `json:"deg"`
+	Clouds   float64     `json:"clouds"`
+	Rain     float64     `json:"rain,omitempty"`
 }
 
 type weather struct {
@@ -34,6 +40,11 @@ type weather struct {
 	Icon        string `json:"icon"`
 }
 
-type mainWeather struct {
-	Temp float64 `json:"temp"`
+type temperature struct {
+	Day   float64 `json:"day"`
+	Min   float64 `json:"min"`
+	Max   float64 `json:"max"`
+	Night float64 `json:"night"`
+	Eve   float64 `json:"eve"`
+	Morn  float64 `json:"morn"`
 }
